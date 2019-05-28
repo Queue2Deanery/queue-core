@@ -1,0 +1,48 @@
+swagger:
+  api:
+    title: LDAP JWT Authentication Service
+    description: Backend service for authentication, jwt token generation and revokation
+    version: 1.0-SNAPSHOT
+    controller:
+      basepackage: pl.ee.authentication.infrastructure.rest
+app:
+  jwtExpirationInMs: 3600000
+  jwtSecret: HyperSecretPasswordMadeByKubehe
+  ldap:
+    url: ldap://localhost:12345
+    base-dn: dc=ee,dc=pl
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1.0
+
+spring:
+  ldap:
+    embedded:
+      base-dn: dc=ee,dc=pl
+      ldif: classpath:/ldap/ad.ldif
+      port: 12345
+      validation:
+        enabled: false
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/authentication
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+  flyway:
+    enabled: true
+    locations: classpath:/db/migration
+    clean-on-validation-error: true
+    clean-disabled: false
+    baseline-on-migrate: true
+debug: true

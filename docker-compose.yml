@@ -1,0 +1,121 @@
+version: '3.0'
+
+services:
+
+  queue-db:
+    image: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: queue
+    volumes:
+      - ./postgresql.conf:/etc/postgresql.conf
+    ports:
+      - 5432:5432
+
+  authentication-db:
+    image: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: authentication
+    volumes:
+      - ./postgresql.conf:/etc/postgresql.conf
+    ports:
+      - 5432:5433
+
+  external:
+    restart: always
+    build:
+      context: ./external.Dockerfile
+    image: queue-backend-external:v1.0
+    ports:
+      - 8081:8080
+    expose:
+      - 8080
+    depends_on:
+      - db
+      - openldap
+    environment:
+      - spring.datasource.url=jdbc:postgresql://db:5432/queue
+      - spring.datasource.username=postgres
+      - spring.datasource.password=postgres
+
+  internal:
+    restart: always
+    build:
+      context: ./internal.Dockerfile
+    image: queue-backend-internal:v1.0
+    ports:
+      - 8082:8080
+    expose:
+      - 8080
+    depends_on:
+      - db
+      - openldap
+    environment:
+      - spring.datasource.url=jdbc:postgresql://db:5432/queue
+      - spring.datasource.data-username=postgres
+      - spring.datasource.data-password=postgres
+
+  openldap:
+    restart: on-failure
+    image: osixia/openldap:latest
+    container_name: openldap
+    environment:
+      #      LDAP_TLS: 'true'
+      #      LDAP_TLS_CRT_FILENAME: 'fullchain.pem'
+      #      LDAP_TLS_KEY_FILENAME: 'privkey.pem'
+      #      LDAP_TLS_CA_CRT_FILENAME: 'fullchain.pem'
+      LDAP_ORGANISATION: "PWEE"
+      LDAP_DOMAIN: "ee.pw.edu.pl"
+      LDAP_BASE_DN: "dc=ee,dc=pl"
+      LDAP_ADMIN_PASSWORD: "secret"
+    #      LDAP_TLS_CIPHER_SUITE: "NORMAL"
+    #      LDAP_TLS_VERIFY_CLIENT: "allow"
+    tty: true
+    stdin_open: true
+    #    volumes:
+    #      - /var/lib/ldap
+    #      - /etc/ldap/slapd.d
+    #      - /container/service/slapd/assets/certs/
+    ports:
+      - "389:389"
+      - "639:639"
+  #    hostname: "ee.pw.edu.pl"
+
+  phpldapadmin:
+    restart: on-failure
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS=false:
+    ports:
+      - "8082:80"
+    depends_on:
+      - openldap
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgres@postgres.com
+      PGADMIN_DEFAULT_PASSWORD: postgres@postgres.com
+    #    volumes:
+    #       - pgadmin:/root/.pgadmin
+    ports:
+      - "8083:80"
+    restart: on-failure
+
+  pghero:
+    image: ankane/pghero
+    restart: on-failure
+    depends_on:
+      - db
+    ports:
+      - 81:8084
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/queue
