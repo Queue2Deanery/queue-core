@@ -10,7 +10,12 @@ import pl.ee.authentication.domain.authentication.dto.TokenValidationRequest;
 import pl.ee.authentication.domain.authentication.dto.TokenValidationResponse;
 import pl.ee.authentication.infrastructure.repository.db.RevokedJwtTokenRepository;
 
+import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import static io.vavr.API.*;
 
 @Service
 @Slf4j
@@ -34,11 +39,20 @@ public class TokenValidationQuery {
     return Stream.of(request)
       .map(TokenValidationRequest::getToken)
       .filter(Predicate.not(revokedJwtTokenRepository::existsByJwtToken))
-      .map((token) ->
-          TokenValidationResponse.builder()
-            .studentIndex(tokenUtils.decryptedToken.apply(jwtSecret, token).getBody().getSubject())
-            .build()
+      .map((token) -> {
+          var decryptedToken = tokenUtils.decryptedToken.apply(jwtSecret, token);
+          return TokenValidationResponse.builder()
+            .studentIndex(decryptedToken.getBody().getSubject())
+            .roles(((List<?>) decryptedToken.getBody().get("roles")).stream().map(roleMapper
+            ).collect(Collectors.toList())).build();
+        }
       )
       .getOrElseThrow(RuntimeException::new);// TokenRevokedException
   }
+
+  private Function<Object, TokenValidationResponse.Role> roleMapper = role ->
+    Match((String) role).of(
+      Case($("STUDENT"), r -> TokenValidationResponse.Role.STUDENT),
+      Case($("EMPLOYEE"), r -> TokenValidationResponse.Role.EMPLOYEE)
+    );
 }

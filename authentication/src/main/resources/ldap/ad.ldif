@@ -20,8 +20,26 @@ objectclass: top
 objectclass: person
 objectclass: organizationalPerson
 objectclass: inetOrgPerson
-cn: Jan Kowalski
+cn: Jakub Bączek
 uid: 289111
+userPassword: {SHA}qUqP5cyxm6YcTAhz05Hph5gvu9M=
+
+dn: uid=289112,ou=people,dc=ee,dc=pl
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Paweł Zych
+uid: 289112
+userPassword: {SHA}qUqP5cyxm6YcTAhz05Hph5gvu9M=
+
+dn: uid=289113,ou=people,dc=ee,dc=pl
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Janusz Sawicki
+uid: 289113
 userPassword: {SHA}qUqP5cyxm6YcTAhz05Hph5gvu9M=
 
 dn: uid=666111,ou=people,dc=ee,dc=pl
@@ -29,8 +47,26 @@ objectclass: top
 objectclass: person
 objectclass: organizationalPerson
 objectclass: inetOrgPerson
-cn: Jarosław Kowalski
+cn: Włodzimierz Dąbrowski
 uid: 666111
+userPassword: {SHA}qUqP5cyxm6YcTAhz05Hph5gvu9M=
+
+dn: uid=666112,ou=people,dc=ee,dc=pl
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Jacek Starzyński
+uid: 666112
+userPassword: {SHA}qUqP5cyxm6YcTAhz05Hph5gvu9M=
+
+dn: uid=666113,ou=people,dc=ee,dc=pl
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Radosław Roszczyk
+uid: 666113
 userPassword: {SHA}qUqP5cyxm6YcTAhz05Hph5gvu9M=
 
 dn: cn=students,ou=groups,dc=ee,dc=pl
@@ -39,6 +75,8 @@ objectclass: groupOfUniqueNames
 cn: students
 ou: student
 uniqueMember: uid=289111,ou=people,dc=ee,dc=pl
+uniqueMember: uid=289112,ou=people,dc=ee,dc=pl
+uniqueMember: uid=289113,ou=people,dc=ee,dc=pl
 
 dn: cn=employees,ou=groups,dc=ee,dc=pl
 objectclass: top
@@ -46,3 +84,5 @@ objectclass: groupOfUniqueNames
 cn: students
 ou: student
 uniqueMember: uid=666111,ou=people,dc=ee,dc=pl
+uniqueMember: uid=666112,ou=people,dc=ee,dc=pl
+uniqueMember: uid=666113,ou=people,dc=ee,dc=pl

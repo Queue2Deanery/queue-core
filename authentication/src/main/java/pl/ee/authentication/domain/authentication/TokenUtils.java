@@ -8,8 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.ldap.userdetails.LdapUserDetailsImpl;
 import org.springframework.stereotype.Service;
+import pl.ee.authentication.domain.authentication.dto.TokenValidationResponse;
 
 import java.util.Date;
+import java.util.List;
 
 import static io.vavr.API.*;
 import static io.vavr.Predicates.instanceOf;
@@ -45,6 +47,7 @@ public class TokenUtils {
       .setSubject(userPrincipal.getUsername())
       .setIssuedAt(now)
       .setExpiration(expiryDate)
+      .claim("roles", List.of(TokenValidationResponse.Role.STUDENT)) // todo add retrieving user groups from ldap
       .signWith(SignatureAlgorithm.HS512, jwtSecret)
       .compact();
   };
