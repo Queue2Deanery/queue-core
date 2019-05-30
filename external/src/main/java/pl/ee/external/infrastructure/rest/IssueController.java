@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pl.ee.external.domain.issue.dto.*;
 import pl.ee.external.domain.issue.usecase.*;
@@ -39,25 +40,25 @@ public class IssueController {
 
   @PreAuthorize("hasRole('ROLE_STUDENT')")
   @GetMapping(path = "/detail/{queueId}")
-  public ResponseEntity<UserIssueResponse> getUserIssueById(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @PathVariable Long queueId) {
-    return ResponseEntity.ok(userIssueQuery.logic(queueId, null));
+  public ResponseEntity<UserIssueResponse> getUserIssueById(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @PathVariable Long queueId, Authentication authentication) {
+    return ResponseEntity.ok(userIssueQuery.logic(queueId, authentication.getPrincipal().toString()));
   }
 
   @PreAuthorize("hasRole('ROLE_STUDENT')")
   @PostMapping // user can post only one issue to queue
-  public ResponseEntity<UserSubmitIssueResponse> submitIssue(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @RequestBody UserSubmitIssueRequest requestBody) {
+  public ResponseEntity<UserSubmitIssueResponse> submitIssue(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @RequestBody UserSubmitIssueRequest requestBody, Authentication authentication) {
     return ResponseEntity.ok(userSubmitIssueCommand.logic(requestBody));
   }
 
   @PreAuthorize("hasRole('ROLE_STUDENT')")
   @DeleteMapping(path = "/{queueId}")
-  public ResponseEntity<UserDeleteIssueResponse> deleteIssue(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @PathVariable Long queueId) {
-    return ResponseEntity.ok(userDeleteIssueCommand.logic(queueId, null));
+  public ResponseEntity<UserDeleteIssueResponse> deleteIssue(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @PathVariable Long queueId, Authentication authentication) {
+    return ResponseEntity.ok(userDeleteIssueCommand.logic(queueId, authentication.getPrincipal().toString()));
   }
 
   @PreAuthorize("hasRole('ROLE_STUDENT')")
   @PatchMapping
-  public ResponseEntity<UserPatchIssueResponse> patchIssue(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @RequestBody UserPatchIssueRequest requestBody) {
+  public ResponseEntity<UserPatchIssueResponse> patchIssue(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @RequestBody UserPatchIssueRequest requestBody, Authentication authentication) {
     return ResponseEntity.ok(userPatchIssueCommand.logic(requestBody));
   }
 }
