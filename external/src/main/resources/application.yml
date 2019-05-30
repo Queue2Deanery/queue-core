@@ -4,7 +4,7 @@ swagger:
     description: Backend service for students
     version: 1.0-SNAPSHOT
     controller:
-      basepackage: pl.ee.external.infrastructure.rest
+      basepackage: pl.ee.external.application.rest
 app:
   authenticationUri: http://localhost:8089/api/v1.0
 

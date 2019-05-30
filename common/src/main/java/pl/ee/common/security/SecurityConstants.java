@@ -1,4 +1,4 @@
-package pl.ee.common.domain.security;
+package pl.ee.common.security;
 
 public class SecurityConstants {
   public static final String TOKEN_HEADER_NAME = "queue-token";

@@ -1,4 +1,4 @@
-package pl.ee.common.domain.security.dto;
+package pl.ee.common.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

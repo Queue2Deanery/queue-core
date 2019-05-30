@@ -1,9 +1,9 @@
-package pl.ee.authentication.infrastructure.rest;
+package pl.ee.authentication.application.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.ee.common.domain.security.dto.*;
+import pl.ee.common.security.dto.*;
 import pl.ee.authentication.domain.security.usecase.TokenGenerationQuery;
 import pl.ee.authentication.domain.security.usecase.TokenRevocationCommand;
 import pl.ee.authentication.domain.security.usecase.TokenValidationQuery;

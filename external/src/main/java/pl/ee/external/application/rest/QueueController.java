@@ -1,4 +1,4 @@
-package pl.ee.external.infrastructure.rest;
+package pl.ee.external.application.rest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

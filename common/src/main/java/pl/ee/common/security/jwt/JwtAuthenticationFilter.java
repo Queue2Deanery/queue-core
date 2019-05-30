@@ -1,4 +1,4 @@
-package pl.ee.external.application.security;
+package pl.ee.common.security.jwt;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
@@ -7,9 +7,9 @@ import org.springframework.security.authentication.rcp.RemoteAuthenticationExcep
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import pl.ee.common.domain.security.SecurityConstants;
-import pl.ee.common.domain.security.dto.TokenGenerationRequest;
-import pl.ee.common.domain.security.dto.TokenGenerationResponse;
+import pl.ee.common.security.SecurityConstants;
+import pl.ee.common.security.dto.TokenGenerationRequest;
+import pl.ee.common.security.dto.TokenGenerationResponse;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static pl.ee.common.domain.security.SecurityConstants.TOKEN_HEADER_NAME;
+import static pl.ee.common.security.SecurityConstants.TOKEN_HEADER_NAME;
 
 @Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -44,7 +44,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
   }
 
   @Override
-  protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+  protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
 
     var token = ((JwtUsernamePasswordAuthenticationToken) authResult).getToken();
 

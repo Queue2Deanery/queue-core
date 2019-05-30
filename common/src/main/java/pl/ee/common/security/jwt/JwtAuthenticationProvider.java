@@ -1,4 +1,4 @@
-package pl.ee.external.application.security;
+package pl.ee.common.security.jwt;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
@@ -7,8 +7,8 @@ import org.springframework.security.authentication.rcp.RemoteAuthenticationExcep
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import pl.ee.common.domain.security.dto.TokenValidationRequest;
-import pl.ee.common.domain.security.dto.TokenValidationResponse;
+import pl.ee.common.security.dto.TokenValidationRequest;
+import pl.ee.common.security.dto.TokenValidationResponse;
 
 import java.util.stream.Collectors;
 

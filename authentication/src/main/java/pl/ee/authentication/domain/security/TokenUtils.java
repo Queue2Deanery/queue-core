@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.ldap.userdetails.LdapUserDetailsImpl;
 import org.springframework.stereotype.Service;
-import pl.ee.common.domain.security.dto.TokenValidationResponse;
+import pl.ee.common.security.dto.TokenValidationResponse;
 
 import java.util.Date;
 import java.util.List;

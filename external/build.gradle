@@ -42,8 +42,6 @@ dependencies {
 
     implementation('org.springframework.boot:spring-boot-starter-integration')
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'org.springframework.ldap:spring-ldap-core'
-    implementation 'org.springframework.security:spring-security-ldap'
 compileOnly('org.springframework.boot:spring-boot-configuration-processor')
 
     implementation 'org.flywaydb:flyway-core'

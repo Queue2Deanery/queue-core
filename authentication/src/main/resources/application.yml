@@ -4,7 +4,7 @@ swagger:
     description: Backend service for authentication, jwt token generation and revokation
     version: 1.0-SNAPSHOT
     controller:
-      basepackage: pl.ee.authentication.infrastructure.rest
+      basepackage: pl.ee.authentication.application.rest
 app:
   jwtExpirationInMs: 3600000
   jwtSecret: HyperSecretPasswordMadeByKubehe

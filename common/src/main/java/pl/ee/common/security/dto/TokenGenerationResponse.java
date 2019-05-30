@@ -1,4 +1,4 @@
-package pl.ee.common.domain.security.dto;
+package pl.ee.common.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenGenerationRequest {
-  private String studentIndex;
-  private String password;
+public class TokenGenerationResponse {
+  private String token;
 }

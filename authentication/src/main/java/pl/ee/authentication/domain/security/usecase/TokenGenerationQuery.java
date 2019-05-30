@@ -7,8 +7,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import pl.ee.authentication.domain.security.TokenUtils;
-import pl.ee.common.domain.security.dto.TokenGenerationRequest;
-import pl.ee.common.domain.security.dto.TokenGenerationResponse;
+import pl.ee.common.security.dto.TokenGenerationRequest;
+import pl.ee.common.security.dto.TokenGenerationResponse;
 
 @Service
 public class TokenGenerationQuery {

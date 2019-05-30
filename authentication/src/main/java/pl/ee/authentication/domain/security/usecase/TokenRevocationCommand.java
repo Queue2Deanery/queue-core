@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.ee.authentication.domain.security.TokenUtils;
-import pl.ee.common.domain.security.dto.TokenRevocationRequest;
-import pl.ee.common.domain.security.dto.TokenRevocationResponse;
+import pl.ee.common.security.dto.TokenRevocationRequest;
+import pl.ee.common.security.dto.TokenRevocationResponse;
 import pl.ee.authentication.domain.model.db.RevokedJwtTokenEntity;
 import pl.ee.authentication.infrastructure.repository.db.RevokedJwtTokenRepository;
 

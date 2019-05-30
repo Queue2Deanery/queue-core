@@ -1,17 +1,14 @@
-package pl.ee.common.domain.security.dto;
-
+package pl.ee.common.security.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenRevocationResponse {
-  private LocalDateTime createdAt;
+public class TokenValidationRequest {
+  private String token;
 }

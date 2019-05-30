@@ -1,4 +1,4 @@
-package pl.ee.external.application.security;
+package pl.ee.common.security.jwt;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
@@ -7,8 +7,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import pl.ee.common.domain.security.dto.TokenValidationRequest;
-import pl.ee.common.domain.security.dto.TokenValidationResponse;
+import pl.ee.common.security.dto.TokenValidationRequest;
+import pl.ee.common.security.dto.TokenValidationResponse;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-import static pl.ee.common.domain.security.SecurityConstants.TOKEN_HEADER_NAME;
+import static pl.ee.common.security.SecurityConstants.TOKEN_HEADER_NAME;
 
 @Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {

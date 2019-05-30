@@ -9,12 +9,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import pl.ee.external.application.security.JwtAuthenticationFilter;
-import pl.ee.external.application.security.JwtAuthenticationProvider;
-import pl.ee.external.application.security.JwtAuthorizationFilter;
-import pl.ee.external.application.security.JwtLogoutHandler;
+import pl.ee.common.security.jwt.JwtAuthenticationFilter;
+import pl.ee.common.security.jwt.JwtAuthenticationProvider;
+import pl.ee.common.security.jwt.JwtAuthorizationFilter;
+import pl.ee.common.security.jwt.JwtLogoutHandler;
 
-import static pl.ee.common.domain.security.SecurityConstants.LOGOUT_URL;
+import static pl.ee.common.security.SecurityConstants.LOGOUT_URL;
 
 @Configuration
 @EnableWebSecurity

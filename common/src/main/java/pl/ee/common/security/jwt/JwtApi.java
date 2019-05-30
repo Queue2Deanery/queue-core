@@ -1,4 +1,4 @@
-package pl.ee.external.application.security;
+package pl.ee.common.security.jwt;
 
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryConfig;
@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import pl.ee.common.domain.security.dto.*;
+import pl.ee.common.security.dto.*;
 
 import java.time.Duration;
 
