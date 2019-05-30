@@ -23,8 +23,7 @@ public class JwtLogoutHandler  implements LogoutHandler {
   @Override
   public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
     var token = request.getHeader(TOKEN_HEADER_NAME);
-    var tokenFromAuth = authentication.getCredentials().toString();
-    if(token == null || token.isEmpty() || tokenFromAuth == null || tokenFromAuth.isEmpty() || !token.equals(tokenFromAuth)) {
+    if(token == null || token.isEmpty()) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       return;
     }

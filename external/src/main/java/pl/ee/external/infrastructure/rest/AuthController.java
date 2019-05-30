@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
+// A hack to use auth endpoints from SecurityConfiguration in swagger
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {

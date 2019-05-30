@@ -25,10 +25,10 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     var jwtAuthentication = (JwtUsernamePasswordAuthenticationToken) authentication;
     var name = jwtAuthentication.getName();
-    var token = jwtAuthentication.getToken(); // token is password at the same time :D
+    var token = jwtAuthentication.getToken();
 
     return jwtApi.tokenValidationRequest(TokenValidationRequest.builder().token(token).build())
-      .map(response -> new JwtUsernamePasswordAuthenticationToken(name, jwtAuthentication.getCredentials(), response.getRoles().stream()// gold medal solution xDDDD beacause password is protected outside of provider
+      .map(response -> new JwtUsernamePasswordAuthenticationToken(name, jwtAuthentication.getCredentials(), response.getRoles().stream()
         .map(TokenValidationResponse.Role::toString)
         .map(SimpleGrantedAuthority::new)
         .collect(Collectors.toList()), token)).getOrElseThrow(throwable -> new RemoteAuthenticationException(throwable.getMessage()));
