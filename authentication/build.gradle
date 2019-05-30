@@ -29,6 +29,7 @@ repositories {
 }
 
 dependencies {
+    compile project (':common')
     // groovy language
     compile 'org.codehaus.groovy:groovy-all:2.4.7'
 

@@ -13,8 +13,7 @@ public class QueueController {
 
   @GetMapping
   public ResponseEntity<List<QueueResponse>> getQueueList() {
-    throw new EntityNotFoundException("dupa");
-//    return ResponseEntity.ok(List.of(QueueResponse.builder().build()));
+    return ResponseEntity.ok(List.of(QueueResponse.builder().build()));
   }
 
   @GetMapping(path = "/{queueId}")
