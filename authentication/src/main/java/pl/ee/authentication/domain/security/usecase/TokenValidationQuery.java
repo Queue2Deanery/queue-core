@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.ee.authentication.domain.security.TokenUtils;
+import pl.ee.common.exception.AuthorizationException;
 import pl.ee.common.security.dto.TokenValidationRequest;
 import pl.ee.common.security.dto.TokenValidationResponse;
 import pl.ee.authentication.infrastructure.repository.db.RevokedJwtTokenRepository;
@@ -47,7 +48,7 @@ public class TokenValidationQuery {
             ).collect(Collectors.toList())).build();
         }
       )
-      .getOrElseThrow(RuntimeException::new);// TokenRevokedException
+      .getOrElseThrow(AuthorizationException::new);
   }
 
   private Function<Object, TokenValidationResponse.Role> roleMapper = role ->

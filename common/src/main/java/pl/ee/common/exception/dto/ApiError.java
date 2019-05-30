@@ -1,4 +1,4 @@
-package pl.ee.external.infrastructure.exception.dto;
+package pl.ee.common.exception.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
@@ -18,7 +18,7 @@ public class ApiError {
   @Builder.Default
   private LocalDateTime timestamp = LocalDateTime.now();
   private List<Map.Entry<Language, String>> message;
-  private List<ApiSubError> subErrors;
+  private List<? extends ApiSubError> subErrors;
 
   public enum Language {
     pl, en

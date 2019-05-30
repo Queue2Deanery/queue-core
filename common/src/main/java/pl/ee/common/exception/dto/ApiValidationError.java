@@ -1,4 +1,4 @@
-package pl.ee.external.infrastructure.exception.dto;
+package pl.ee.common.exception.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import java.util.Map;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
-public class ApiValidationError extends ApiSubError {
+public class ApiValidationError implements ApiSubError {
   private String field;
   private String rejectedValue;
   private List<Map.Entry<ApiError.Language, String>> message;

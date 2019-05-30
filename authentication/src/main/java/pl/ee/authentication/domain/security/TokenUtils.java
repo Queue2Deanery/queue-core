@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.ldap.userdetails.LdapUserDetailsImpl;
 import org.springframework.stereotype.Service;
+import pl.ee.common.exception.AuthorizationException;
 import pl.ee.common.security.dto.TokenValidationResponse;
 
 import java.util.Date;
@@ -33,7 +34,7 @@ public class TokenUtils {
           Case($(instanceOf(UnsupportedJwtException.class)), () -> run(() -> log.error("Unsupported jwt"))),
           Case($(instanceOf(IllegalArgumentException.class)), () -> run(() -> log.error("Jwt claims string is empty ")))
         );
-        throw new RuntimeException(); // change to InvalidTokenException
+        throw new AuthorizationException();
       }).get();
 
   public Function3<String, Integer,Authentication, String> generateToken = (jwtSecret, jwtExpirationInMs, authentication) -> {

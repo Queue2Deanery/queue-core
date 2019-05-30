@@ -36,12 +36,25 @@ spring:
   mvc:
     throw-exception-if-no-handler-found: false
 
-exception:
-  not-found:
-    pl: Nie znaleziono zasobu {}
-    en: Entity {} not found
 debug: true
 logging:
   level:
     org.springframework: ERROR
     pl.ee.external: DEBUG
+
+exception:
+  not-found:
+    pl: Nie znaleziono zasobu {}
+    en: Entity {} not found
+  business:
+    pl: Wystąpił błąd w systemie, {}
+    en: Exception occurred during data processing, {}
+  validation:
+    pl: Dane są niezgodne ze schematem
+    en: Provided data is invalid
+  authorization:
+    pl: Użytkownik nie ma uprawnień do tej akcji, {}
+    en: User is not authorized to access this functionality, {}
+  authentication:
+    pl: Użytkownik nie jest zalogowany {}
+    en: User is not logged in {}

@@ -33,13 +33,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                   FilterChain filterChain) throws IOException, ServletException {
-    var authentication = getAuthentication(request);
+    var authentication = getAuthentication(request, response);
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
     filterChain.doFilter(request, response);
   }
 
-  private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+  private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request, HttpServletResponse response) {
     var token = request.getHeader(TOKEN_HEADER_NAME);
     if (token == null || token.isEmpty()) {
       return null;
@@ -47,11 +47,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     return jwtApi
       .tokenValidationRequest(TokenValidationRequest.builder().token(token).build())
-      .map(response ->
+      .map(res ->
         new JwtUsernamePasswordAuthenticationToken(
-          response.getStudentIndex(),
+          res.getStudentIndex(),
           null,
-          response.getRoles().stream()
+          res.getRoles().stream()
             .map(TokenValidationResponse.Role::toString)
             .peek(log::debug)
             .map(SimpleGrantedAuthority::new)
@@ -59,6 +59,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
           token
         )
       )
+      .peekLeft(res -> response.setStatus(HttpServletResponse.SC_RESET_CONTENT))
       .getOrNull();
   }
 }

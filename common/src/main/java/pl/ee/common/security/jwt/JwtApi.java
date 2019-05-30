@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import pl.ee.common.security.dto.*;
@@ -26,7 +27,7 @@ public class JwtApi {
   private final Retry retry = Retry.of(JwtApi.class.getName(), RetryConfig.custom()
     .maxAttempts(3)
     .waitDuration(Duration.ofMillis(200))
-    .retryExceptions(RestClientException.class)
+    .retryExceptions(RestClientException.class, HttpClientErrorException.class)
     .build());
 
   @Autowired

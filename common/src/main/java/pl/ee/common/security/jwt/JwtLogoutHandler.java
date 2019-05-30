@@ -28,6 +28,8 @@ public class JwtLogoutHandler  implements LogoutHandler {
       return;
     }
 
-    jwtApi.tokenRevocationRequest(TokenRevocationRequest.builder().token(token).ipAddress(request.getRemoteAddr()).build());
+    jwtApi.tokenRevocationRequest(TokenRevocationRequest.builder().token(token).ipAddress(request.getRemoteAddr()).build())
+      .peek(res -> response.setStatus(HttpServletResponse.SC_RESET_CONTENT))
+      .peekLeft(throwable -> response.setStatus(HttpServletResponse.SC_RESET_CONTENT));
   }
 }
