@@ -21,19 +21,16 @@ import java.time.Duration;
 @Slf4j
 public class JwtApi {
 
-//  @Value("app.authenticationUri")
-  String authenticationUri = "http://localhost:8089/api/v1.0";
-
   private final RestTemplate restTemplate;
 
-  private final Retry retry = Retry.of("SecurityApi", RetryConfig.custom()
+  private final Retry retry = Retry.of(JwtApi.class.getName(), RetryConfig.custom()
     .maxAttempts(3)
     .waitDuration(Duration.ofMillis(200))
     .retryExceptions(RestClientException.class)
     .build());
 
   @Autowired
-  public JwtApi(RestTemplateBuilder restTemplateBuilder) {
+  public JwtApi(RestTemplateBuilder restTemplateBuilder, @Value("${app.authenticationUri}") String authenticationUri) {
     this.restTemplate = restTemplateBuilder.rootUri(authenticationUri).build();
   }
 

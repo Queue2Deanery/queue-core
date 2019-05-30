@@ -3,7 +3,6 @@ package pl.ee.external.infrastructure.rest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.ee.external.domain.queue.dto.QueueResponse;
-import pl.ee.external.infrastructure.exception.EntityNotFoundException;
 
 import java.util.List;
 
