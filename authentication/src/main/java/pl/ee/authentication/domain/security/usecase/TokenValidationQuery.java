@@ -52,7 +52,7 @@ public class TokenValidationQuery {
 
   private Function<Object, TokenValidationResponse.Role> roleMapper = role ->
     Match((String) role).of(
-      Case($("STUDENT"), r -> TokenValidationResponse.Role.STUDENT),
-      Case($("EMPLOYEE"), r -> TokenValidationResponse.Role.EMPLOYEE)
+      Case($("ROLE_STUDENT"), r -> TokenValidationResponse.Role.ROLE_STUDENT),
+      Case($("ROLE_EMPLOYEE"), r -> TokenValidationResponse.Role.ROLE_EMPLOYEE)
     );
 }

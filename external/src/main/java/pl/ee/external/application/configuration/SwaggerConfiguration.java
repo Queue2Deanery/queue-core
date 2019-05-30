@@ -36,12 +36,6 @@ public class SwaggerConfiguration {
   @Bean
   public Docket swaggerApi() {
     return new Docket(DocumentationType.SWAGGER_2)
-      .globalOperationParameters(List.of(new ParameterBuilder()
-        .name(TOKEN_HEADER_NAME)
-        .description("token used for validating user")
-        .modelRef(new ModelRef("string"))
-        .parameterType("header")
-        .build()))
       .select()
       .apis(RequestHandlerSelectors.basePackage(basePackage))
       .paths(PathSelectors.ant("/**")).build().apiInfo(metaData());

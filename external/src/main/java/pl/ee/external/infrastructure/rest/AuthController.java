@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
+import static pl.ee.common.domain.security.SecurityConstants.TOKEN_HEADER_NAME;
+
 // A hack to use auth endpoints from SecurityConfiguration in swagger
 
 @RestController
@@ -17,7 +19,7 @@ public class AuthController {
 
   @ApiOperation("Logout.")
   @GetMapping("/logout")
-  public void fakeLogout() {
+  public void fakeLogout(@RequestHeader(value = TOKEN_HEADER_NAME) String token) {
     throw new IllegalStateException("This method shouldn't be called. It's implemented by Spring Security filters.");
   }
 }

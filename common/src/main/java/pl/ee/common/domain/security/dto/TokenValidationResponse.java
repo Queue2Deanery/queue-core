@@ -16,6 +16,6 @@ public class TokenValidationResponse {
   private List<Role> roles;
 
   public enum Role {
-    STUDENT, EMPLOYEE
+    ROLE_STUDENT, ROLE_EMPLOYEE
   }
 }

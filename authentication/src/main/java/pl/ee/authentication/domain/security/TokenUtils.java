@@ -47,7 +47,7 @@ public class TokenUtils {
       .setSubject(userPrincipal.getUsername())
       .setIssuedAt(now)
       .setExpiration(expiryDate)
-      .claim("roles", List.of(TokenValidationResponse.Role.STUDENT)) // todo add retrieving user groups from ldap
+      .claim("roles", List.of(TokenValidationResponse.Role.ROLE_STUDENT)) // todo add retrieving user groups from ldap
       .signWith(SignatureAlgorithm.HS512, jwtSecret)
       .compact();
   };

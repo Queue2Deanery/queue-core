@@ -23,8 +23,9 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
+      .headers().cacheControl().disable().and().requestCache().disable()
       .cors().and().csrf().disable()
-      .authorizeRequests().antMatchers("/").permitAll()
+      .authorizeRequests().antMatchers("/**").permitAll()
       .and()
       .addFilter(new JwtAuthenticationFilter(authenticationManager(), getApplicationContext()))
       .addFilter(new JwtAuthorizationFilter(authenticationManager(), getApplicationContext()))

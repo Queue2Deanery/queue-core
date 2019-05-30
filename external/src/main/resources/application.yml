@@ -41,3 +41,7 @@ exception:
     pl: Nie znaleziono zasobu {}
     en: Entity {} not found
 debug: true
+logging:
+  level:
+    org.springframework: ERROR
+    pl.ee.external: DEBUG

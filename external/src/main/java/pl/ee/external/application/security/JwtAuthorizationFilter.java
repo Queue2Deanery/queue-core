@@ -34,11 +34,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                   FilterChain filterChain) throws IOException, ServletException {
     var authentication = getAuthentication(request);
-    var header = request.getHeader(TOKEN_HEADER_NAME);
 
-    if (header != null && !header.isEmpty()) {
-      SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
+    SecurityContextHolder.getContext().setAuthentication(authentication);
     filterChain.doFilter(request, response);
   }
 
@@ -56,10 +53,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
           null,
           response.getRoles().stream()
             .map(TokenValidationResponse.Role::toString)
+            .peek(log::debug)
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList()),
           token
         )
-      ).getOrNull();
+      )
+      .getOrNull();
   }
 }

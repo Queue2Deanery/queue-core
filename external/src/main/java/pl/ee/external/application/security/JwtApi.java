@@ -41,21 +41,27 @@ public class JwtApi {
     return Try.of(
       Retry.decorateCheckedSupplier(retry,
         CheckedFunction0.of(() -> restTemplate.postForEntity("/token/generate", request, TokenGenerationResponse.class))))
-      .map(ResponseEntity::getBody).toEither().peekLeft(throwable -> log.error("failed to generate token", throwable));
+      .map(ResponseEntity::getBody).toEither()
+      .peek(response -> log.debug("generate jwt success: {}", response))
+      .peekLeft(throwable -> log.error("failed to generate token", throwable));
   }
 
   Either<Throwable, TokenRevocationResponse> tokenRevocationRequest(TokenRevocationRequest request) {
     return Try.of(
       Retry.decorateCheckedSupplier(retry,
         CheckedFunction0.of(() -> restTemplate.postForEntity("/token/revoke", request, TokenRevocationResponse.class))))
-      .map(ResponseEntity::getBody).toEither().peekLeft(throwable -> log.error("failed to revoke token", throwable));
+      .map(ResponseEntity::getBody).toEither()
+      .peek(response -> log.debug("revoke jwt success: {}", response))
+      .peekLeft(throwable -> log.error("failed to revoke token", throwable));
   }
 
   Either<Throwable, TokenValidationResponse> tokenValidationRequest(TokenValidationRequest request) {
     return Try.of(
       Retry.decorateCheckedSupplier(retry,
         CheckedFunction0.of(() -> restTemplate.postForEntity("/token/validate", request, TokenValidationResponse.class))))
-      .map(ResponseEntity::getBody).toEither().peekLeft(throwable -> log.error("failed to validate token", throwable));
+      .map(ResponseEntity::getBody).toEither()
+      .peek(response -> log.debug("validate jwt success: {}", response))
+      .peekLeft(throwable -> log.error("failed to validate token", throwable));
   }
 
 }

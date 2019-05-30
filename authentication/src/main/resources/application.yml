@@ -47,3 +47,5 @@ debug: true
 logging:
   level:
     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+    org.springframework: ERROR
+    pl.ee.external: DEBUG
