@@ -3,7 +3,7 @@ package pl.ee.common.model;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 /*
     FieldOfStudyEntity - Nazwa wydziału
@@ -16,13 +16,15 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="field_of_study", schema="public")
+@Table(name = "field_of_study", schema = "public", catalog = "queue")
 public class FieldOfStudyEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @NotNull
+  @Column(nullable = false)
+  private String faculty;
+
   @Column(unique = true, nullable = false)
   private String name;
 
@@ -30,9 +32,7 @@ public class FieldOfStudyEntity {
   private String shortName;
 
   @EqualsAndHashCode.Exclude
-  @ManyToOne
-  @NotNull
-  @JoinColumn(name = "queue_id")
-  private QueueEntity queueEntity;
+  @OneToMany(mappedBy = "fieldOfStudyEntity", cascade = CascadeType.ALL)
+  private Set<QueueEntity> queueEntities;
 
 }

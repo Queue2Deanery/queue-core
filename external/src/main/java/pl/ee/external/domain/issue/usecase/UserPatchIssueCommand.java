@@ -6,7 +6,7 @@ import pl.ee.external.domain.issue.dto.UserPatchIssueResponse;
 
 @Service
 public class UserPatchIssueCommand {
-  public UserPatchIssueResponse logic(UserPatchIssueRequest request) {
+  public UserPatchIssueResponse logic(UserPatchIssueRequest request, String userIndex) {
     return null;
   }
 }

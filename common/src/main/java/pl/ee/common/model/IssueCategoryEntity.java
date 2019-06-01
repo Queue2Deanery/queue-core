@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="issue_category", schema="public")
+@Table(name = "issue_category", schema = "public", catalog = "queue")
 public class IssueCategoryEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)

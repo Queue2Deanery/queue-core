@@ -6,7 +6,7 @@ import pl.ee.external.domain.issue.dto.UserSubmitIssueResponse;
 
 @Service
 public class UserSubmitIssueCommand {
-  public UserSubmitIssueResponse logic(UserSubmitIssueRequest request) {
+  public UserSubmitIssueResponse logic(UserSubmitIssueRequest request, String userIndex) {
     return null;
   }
 }

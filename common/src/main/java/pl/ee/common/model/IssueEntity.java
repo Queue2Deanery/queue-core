@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="issue", schema = "public")
+@Table(name = "issue", schema = "public", catalog = "queue")
 public class IssueEntity {
 
   @Id
@@ -23,7 +23,7 @@ public class IssueEntity {
   private Long id;
 
   @Builder.Default
-  @Column(name="created_at")
+  @Column(name = "created_at", nullable = false)
   private  LocalDateTime createdAt = LocalDateTime.now();
 
   @Column(name = "started_at")
@@ -36,6 +36,9 @@ public class IssueEntity {
   @ManyToOne
   @JoinColumn(name = "queue_id")
   private QueueEntity queueEntity;
+
+  @Column(name = "queue_id", insertable = false, updatable = false)
+  private Long queueId;
 
   @EqualsAndHashCode.Exclude
   @ManyToOne

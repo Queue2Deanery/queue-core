@@ -48,7 +48,7 @@ public class IssueController {
   @PreAuthorize("hasRole('ROLE_STUDENT')")
   @PostMapping // user can post only one issue to queue
   public ResponseEntity<UserSubmitIssueResponse> submitIssue(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @RequestBody UserSubmitIssueRequest requestBody, @ApiIgnore Authentication authentication) {
-    return ResponseEntity.ok(userSubmitIssueCommand.logic(requestBody));
+    return ResponseEntity.ok(userSubmitIssueCommand.logic(requestBody, authentication.getPrincipal().toString()));
   }
 
   @PreAuthorize("hasRole('ROLE_STUDENT')")
@@ -60,6 +60,6 @@ public class IssueController {
   @PreAuthorize("hasRole('ROLE_STUDENT')")
   @PatchMapping
   public ResponseEntity<UserPatchIssueResponse> patchIssue(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @RequestBody UserPatchIssueRequest requestBody, @ApiIgnore Authentication authentication) {
-    return ResponseEntity.ok(userPatchIssueCommand.logic(requestBody));
+    return ResponseEntity.ok(userPatchIssueCommand.logic(requestBody, authentication.getPrincipal().toString()));
   }
 }
