@@ -1,4 +1,4 @@
-version: '3.0'
+version: '2.1'
 
 services:
 
@@ -9,10 +9,13 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: queue
-    volumes:
-      - ./postgresql.conf:/etc/postgresql.conf
     ports:
       - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   authentication-db:
     image: postgres
@@ -21,44 +24,56 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: authentication
-    volumes:
-      - ./postgresql.conf:/etc/postgresql.conf
     ports:
-      - 5432:5433
+      - 5433:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   external:
     restart: always
     build:
-      context: ./external.Dockerfile
+      context: .
+      dockerfile: external.Dockerfile
     image: queue-backend-external:v1.0
     ports:
-      - 8081:8080
+      - 80:8080
     expose:
-      - 8080
+      - 80
     depends_on:
-      - db
-      - openldap
+      queue-db:
+        condition: service_healthy
+      authentication:
+        condition: service_started
     environment:
-      - spring.datasource.url=jdbc:postgresql://db:5432/queue
+      - server.port=8080
+      - app.authenticationUri=http://authentication:8080/api/v1.0
+      - spring.datasource.url=jdbc:postgresql://queue-db:5432/queue
       - spring.datasource.username=postgres
       - spring.datasource.password=postgres
 
-  internal:
+  authentication:
     restart: always
     build:
-      context: ./internal.Dockerfile
-    image: queue-backend-internal:v1.0
+      context: .
+      dockerfile: authentication.Dockerfile
+    image: queue-backend-authentication:v1.0
     ports:
-      - 8082:8080
+      - 83:8080
     expose:
-      - 8080
+      - 83
     depends_on:
-      - db
-      - openldap
+      authentication-db:
+        condition: service_healthy
+      openldap:
+        condition: service_started
     environment:
-      - spring.datasource.url=jdbc:postgresql://db:5432/queue
-      - spring.datasource.data-username=postgres
-      - spring.datasource.data-password=postgres
+      - server.port=8080
+      - spring.datasource.url=jdbc:postgresql://authentication-db:5432/authentication
+      - spring.datasource.username=postgres
+      - spring.datasource.password=postgres
 
   openldap:
     restart: on-failure
@@ -86,36 +101,3 @@ services:
       - "639:639"
   #    hostname: "ee.pw.edu.pl"
 
-  phpldapadmin:
-    restart: on-failure
-    image: osixia/phpldapadmin:latest
-    container_name: phpldapadmin
-    environment:
-      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
-      PHPLDAPADMIN_HTTPS=false:
-    ports:
-      - "8082:80"
-    depends_on:
-      - openldap
-
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: postgres@postgres.com
-      PGADMIN_DEFAULT_PASSWORD: postgres@postgres.com
-    #    volumes:
-    #       - pgadmin:/root/.pgadmin
-    ports:
-      - "8083:80"
-    restart: on-failure
-
-  pghero:
-    image: ankane/pghero
-    restart: on-failure
-    depends_on:
-      - db
-    ports:
-      - 81:8084
-    environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/queue

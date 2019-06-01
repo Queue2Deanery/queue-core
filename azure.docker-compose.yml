@@ -9,8 +9,6 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: queue
-    volumes:
-      - ./postgresql.conf:/etc/postgresql.conf
     ports:
       - 5432:5432
     healthcheck:
@@ -26,8 +24,6 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: authentication
-    volumes:
-      - ./postgresql.conf:/etc/postgresql.conf
     ports:
       - 5433:5432
     healthcheck:
@@ -38,10 +34,7 @@ services:
 
   external:
     restart: always
-    build:
-      context: .
-      dockerfile: external.Dockerfile
-    image: queue-backend-external:v1.0
+    image: kubehe/queue-core:external
     ports:
       - 80:8080
     expose:
@@ -60,10 +53,7 @@ services:
 
   authentication:
     restart: always
-    build:
-      context: .
-      dockerfile: authentication.Dockerfile
-    image: queue-backend-authentication:v1.0
+    image: kubehe/queue-core:authentication
     ports:
       - 83:8080
     expose:
