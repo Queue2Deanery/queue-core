@@ -51,6 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth
       .ldapAuthentication()
+      .groupRoleAttribute("userRole")
       .userDnPatterns("uid={0},ou=people")
       .groupSearchBase("ou=groups")
       .contextSource(contextSource())

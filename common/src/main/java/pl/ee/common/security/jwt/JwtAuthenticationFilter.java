@@ -12,10 +12,8 @@ import pl.ee.common.security.dto.TokenGenerationRequest;
 import pl.ee.common.security.dto.TokenGenerationResponse;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 import static pl.ee.common.security.SecurityConstants.TOKEN_HEADER_NAME;
 
@@ -37,7 +35,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     var userIndex = request.getParameter("userIndex");
     var password = request.getParameter("password");
 
-    return jwtApi.tokenGenerationRequest(TokenGenerationRequest.builder().studentIndex(userIndex).password(password).build())
+    return jwtApi.tokenGenerationRequest(TokenGenerationRequest.builder().ipAddress(request.getRemoteAddr()).userIndex(userIndex).password(password).build())
       .map(TokenGenerationResponse::getToken)
       .map( token -> new JwtUsernamePasswordAuthenticationToken(userIndex, password, null, token))
       .map(authenticationManager::authenticate).getOrElseThrow((throwable -> new RemoteAuthenticationException(throwable.getMessage())));

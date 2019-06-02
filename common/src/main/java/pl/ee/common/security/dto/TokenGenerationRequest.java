@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TokenGenerationRequest {
-  private String studentIndex;
+  private String userIndex;
   private String password;
+  private String ipAddress;
 }

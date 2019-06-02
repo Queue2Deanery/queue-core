@@ -8,27 +8,26 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Entity
-@Table(name="revoked_jwt_token", schema="public")
-public class RevokedJwtTokenEntity {
+@Table(name = "token_generation_audit", schema = "public", catalog = "authentication")
+public class TokenGenerationAuditEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @Column(nullable = false, name = "student_index")
+  @Column(name = "ip_address", nullable = false)
+  private String ipAddress;
+
+  @Column(name = "user_index", nullable = false)
   private String userIndex;
 
   @Builder.Default
   @Column(nullable = false, name = "created_at")
   private LocalDateTime createdAt = LocalDateTime.now();
 
-  @Column(nullable = false, name = "jwt_token", unique = true)
-  private String jwtToken;
-
-  @Column(nullable = false, name = "ip_address")
-  private String ipAddress;
 }

@@ -30,8 +30,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     return jwtApi.tokenValidationRequest(TokenValidationRequest.builder().token(token).build())
       .map(response -> new JwtUsernamePasswordAuthenticationToken(name, jwtAuthentication.getCredentials(), response.getRoles().stream()
-        .map(TokenValidationResponse.Role::toString)
-        .peek(log::debug)
         .map(SimpleGrantedAuthority::new)
         .collect(Collectors.toList()), token)).getOrElseThrow(throwable -> new RemoteAuthenticationException(throwable.getMessage()));
   }

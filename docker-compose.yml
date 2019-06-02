@@ -32,6 +32,22 @@ services:
       timeout: 5s
       retries: 5
 
+  rabbit:
+    image: "rabbitmq:3-management"
+    hostname: "rabbit"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "queue"
+      RABBITMQ_DEFAULT_PASS: "queue"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - 15672:15672
+      - 5672:5672
+    expose:
+      - 15672
+      - 5672
+    tty: true
+
   external:
     restart: always
     build:
@@ -69,11 +85,29 @@ services:
         condition: service_healthy
       openldap:
         condition: service_started
+      mail:
+        condition: service_started
+      rabbit:
+        condition: service_started
     environment:
       - server.port=8080
       - spring.datasource.url=jdbc:postgresql://authentication-db:5432/authentication
       - spring.datasource.username=postgres
       - spring.datasource.password=postgres
+      - spring.rabbitmq.host=rabbit
+
+  mail:
+    restart: always
+    build:
+      context: .
+      dockerfile: mail.Dockerfile
+    image: queue-backend-mail:v1.0
+    depends_on:
+      rabbit:
+        condition: service_started
+    environment:
+      - spring.rabbitmq.host=rabbit
+      - spring.mail.password=xxxxxxxxxxxxxxxx
 
   openldap:
     restart: on-failure

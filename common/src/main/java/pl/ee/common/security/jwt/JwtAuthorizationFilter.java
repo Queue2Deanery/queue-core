@@ -49,11 +49,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
       .tokenValidationRequest(TokenValidationRequest.builder().token(token).build())
       .map(res ->
         new JwtUsernamePasswordAuthenticationToken(
-          res.getStudentIndex(),
+          res.getUserIndex(),
           null,
           res.getRoles().stream()
-            .map(TokenValidationResponse.Role::toString)
-            .peek(log::debug)
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList()),
           token

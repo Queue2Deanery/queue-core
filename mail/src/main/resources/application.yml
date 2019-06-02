@@ -1,0 +1,36 @@
+spring:
+  mail:
+    protocol: smtp
+    host: smtp.gmail.com
+    port: 587
+    username: queuetwodeanery
+    password: xxxxxxxxxxxxx
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: queue
+    password: queue
+
+app:
+  system-mail:
+    queue-to-deanery@no-reply.pl
+  message:
+    suspicious-login:
+      subject: Podejrzana próba logowania w systemie kolejki do dziekanatu
+      body: Wykryto logowanie użytkownika o indeksie '{userIndex}' z adresu ip '{ipAddress}' którego wcześniej nie używałeś. Zgłoś to zdarzenie administracji jeżeli to nie ty
+
+server:
+  port: 8087
+
+debug: true

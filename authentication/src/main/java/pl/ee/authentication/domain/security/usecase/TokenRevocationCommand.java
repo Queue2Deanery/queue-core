@@ -35,7 +35,7 @@ public class TokenRevocationCommand {
       .map((req) -> Tuple.of(req, decryptToken.apply(req.getToken())))
       .map(requestWithToken ->
         RevokedJwtTokenEntity.builder()
-          .studentIndex(requestWithToken._2().getBody().getSubject())
+          .userIndex(requestWithToken._2().getBody().getSubject())
           .ipAddress(requestWithToken._1().getIpAddress())
           .jwtToken(requestWithToken._1().getToken())
           .build())

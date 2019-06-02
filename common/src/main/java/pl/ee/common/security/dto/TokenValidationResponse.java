@@ -12,10 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TokenValidationResponse {
-  private String studentIndex;
-  private List<Role> roles;
+  private String userIndex;
+  private List<String> roles;
 
-  public enum Role {
-    ROLE_STUDENT, ROLE_EMPLOYEE
-  }
 }

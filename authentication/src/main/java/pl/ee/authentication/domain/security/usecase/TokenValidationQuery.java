@@ -43,17 +43,11 @@ public class TokenValidationQuery {
       .map((token) -> {
           var decryptedToken = tokenUtils.decryptedToken.apply(jwtSecret, token);
           return TokenValidationResponse.builder()
-            .studentIndex(decryptedToken.getBody().getSubject())
-            .roles(((List<?>) decryptedToken.getBody().get("roles")).stream().map(roleMapper
+            .userIndex(decryptedToken.getBody().getSubject())
+            .roles(((List<?>) decryptedToken.getBody().get("roles")).stream().map(Object::toString
             ).collect(Collectors.toList())).build();
         }
       )
       .getOrElseThrow(AuthorizationException::new);
   }
-
-  private Function<Object, TokenValidationResponse.Role> roleMapper = role ->
-    Match((String) role).of(
-      Case($("ROLE_STUDENT"), r -> TokenValidationResponse.Role.ROLE_STUDENT),
-      Case($("ROLE_EMPLOYEE"), r -> TokenValidationResponse.Role.ROLE_EMPLOYEE)
-    );
 }

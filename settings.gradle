@@ -4,4 +4,5 @@ include 'common'
 include 'internal'
 include 'external'
 include 'authentication'
+include 'mail'
 

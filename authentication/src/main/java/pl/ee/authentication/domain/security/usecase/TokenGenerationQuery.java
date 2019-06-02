@@ -2,6 +2,7 @@ package pl.ee.authentication.domain.security.usecase;
 
 import io.vavr.collection.Stream;
 import io.vavr.control.Try;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,6 +13,7 @@ import pl.ee.common.exception.AuthenticationException;
 import pl.ee.common.security.dto.TokenGenerationRequest;
 import pl.ee.common.security.dto.TokenGenerationResponse;
 
+@Slf4j
 @Service
 public class TokenGenerationQuery {
   private TokenUtils tokenUtils;
@@ -33,7 +35,8 @@ public class TokenGenerationQuery {
   public TokenGenerationResponse logic(TokenGenerationRequest request) {
     var tokenProvider = tokenUtils.generateToken.apply(jwtSecret, jwtExpirationInMs);
     return Stream.of(request)
-      .map((req) -> Try.of(() -> authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(req.getStudentIndex(), req.getPassword()))).getOrElseThrow(() -> new AuthenticationException(req.getStudentIndex())))
+      .map((req) -> Try.of(() -> authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(req.getUserIndex(), req.getPassword()))).getOrElseThrow(() -> new AuthenticationException(req.getUserIndex())))
+      .peek((req) -> log.debug(req.toString()))
       .map(tokenProvider)
       .map(token -> TokenGenerationResponse.builder().token(token).build())
       .get();
