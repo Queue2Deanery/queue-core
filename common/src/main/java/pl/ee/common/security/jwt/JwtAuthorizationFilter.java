@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import pl.ee.common.security.dto.TokenValidationRequest;
-import pl.ee.common.security.dto.TokenValidationResponse;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

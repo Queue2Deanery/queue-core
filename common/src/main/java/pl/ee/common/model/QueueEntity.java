@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /*
     QueueEntity - Kolejka
@@ -28,19 +29,11 @@ public class QueueEntity {
   @Column(unique = true, name= "short_name")
   private String shortName;
 
-  @Column(name = "access_role", nullable = false)
-  private String accessRole;
-
   @EqualsAndHashCode.Exclude
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "queueEntity")
   private List<IssueEntity> issueEntities;
 
-  @Column(name = "field_of_study_id", insertable = false, updatable = false)
-  private Long fieldOfStudyId;
-
   @EqualsAndHashCode.Exclude
-  @ManyToOne
-  @JoinColumn(name = "field_of_study_id")
-  private FieldOfStudyEntity fieldOfStudyEntity;
-
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "queueEntity")
+  private Set<FieldOfStudyEntity> fieldOfStudyEntities;
 }

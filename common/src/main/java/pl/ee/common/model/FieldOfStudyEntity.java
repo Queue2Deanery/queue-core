@@ -31,8 +31,14 @@ public class FieldOfStudyEntity {
   @Column(unique = true, name="short_name")
   private String shortName;
 
-  @EqualsAndHashCode.Exclude
-  @OneToMany(mappedBy = "fieldOfStudyEntity", cascade = CascadeType.ALL)
-  private Set<QueueEntity> queueEntities;
+  @Column(name = "queue_id", insertable = false, updatable = false)
+  private Long queueId;
 
+  @EqualsAndHashCode.Exclude
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "queue_id")
+  private QueueEntity queueEntity;
+
+  @Column(name = "access_role", nullable = false)
+  private String accessRole;
 }

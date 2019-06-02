@@ -28,11 +28,7 @@ create table queue
 			unique,
 	short_name varchar(255)
 		constraint uk_queue_short_name
-			unique,
-	access_role varchar(255) not null,
-	field_of_study_id bigint not null
-		constraint fk_queue_to_field_of_study
-			references queue
+			unique
 );
 
 alter table queue owner to postgres;
@@ -48,7 +44,11 @@ create table field_of_study
 			unique,
 	short_name varchar(255)
 		constraint uk_field_of_study_short_name
-			unique
+			unique,
+	queue_id bigint not null
+		constraint fk_field_of_study_to_queue
+			references queue,
+	access_role varchar(255) not null
 );
 
 alter table field_of_study owner to postgres;
