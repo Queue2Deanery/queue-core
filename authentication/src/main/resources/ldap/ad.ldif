@@ -80,7 +80,7 @@ objectclass: top
 objectclass: groupOfUniqueNames
 cn: students
 ou: student
-userRole: ELINF
+userRole: WE_INF
 uniqueMember: uid=289111,ou=people,dc=ee,dc=pl
 uniqueMember: uid=289112,ou=people,dc=ee,dc=pl
 uniqueMember: uid=289113,ou=people,dc=ee,dc=pl
