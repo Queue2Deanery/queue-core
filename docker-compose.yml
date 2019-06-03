@@ -1,14 +1,19 @@
-version: '2.1'
+version: '2.1' # 2.1 version allows me doing condition in depends_on
 
 services:
 
   queue-db:
-    image: postgres
+    build:
+      context: .
+      dockerfile: postgres.Dockerfile
     restart: on-failure
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: queue
+    command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
+    volumes:
+      - ./postgresql-queue.conf:/etc/postgresql.conf
     ports:
       - 5432:5432
     healthcheck:

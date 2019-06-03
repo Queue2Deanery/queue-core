@@ -3,14 +3,18 @@ version: '3.0'
 services:
 
   queue-db:
-    image: postgres
+    build:
+      context: .
+      dockerfile: postgres.Dockerfile
     restart: on-failure
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: queue
     volumes:
-      - ./postgresql.conf:/etc/postgresql.conf
+      - ./postgresql-queue.conf:/etc/postgresql.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql.conf"]
+    tty: true
     ports:
       - 5432:5432
 
@@ -21,8 +25,6 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: authentication
-    volumes:
-      - ./postgresql.conf:/etc/postgresql.conf
     ports:
       - 5433:5432
 
