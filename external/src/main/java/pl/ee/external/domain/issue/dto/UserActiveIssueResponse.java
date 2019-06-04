@@ -5,17 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserSubmitIssueRequest {
-  @NotNull
+public class UserActiveIssueResponse {
+  private Long id;
   private Long queueId;
-  @NotNull
-  private Long issueCategoryId;
-  @NotNull
+  private LocalDateTime createdAt;
+  private LocalDateTime startedAt;
+  private String studentIndex;
   private String studentComment;
+  private Long estimatedTimeInSec;
 }

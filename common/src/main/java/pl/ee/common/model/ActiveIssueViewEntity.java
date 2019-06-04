@@ -30,8 +30,10 @@ public class ActiveIssueViewEntity {
   @Column(name = "queue_id")
   private Long queueId;
   @Column(name = "issue_category_name")
-  private String name;
+  private String issueCategoryName;
   @Column(name = "estimated_time_in_sec")
   private Long estimatedTimeInSec;
+  @Column(name = "student_comment")
+  private String studentComment;
 
 }

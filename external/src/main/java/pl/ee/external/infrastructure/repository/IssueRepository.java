@@ -12,8 +12,9 @@ import java.util.List;
 @Repository
 public interface IssueRepository extends JpaRepository<IssueEntity, Long> {
 
-  @Query("delete from IssueEntity ie where ie.studentIndex = :userIndex and ie.startedAt is null and ie.queueId = :queueId")
-  public void deleteAwaitingIssueByQueueIdAndUser(@Param("queueId") Long queueId, @Param("userIndex") String userIndex);
+//  @Query("delete from IssueEntity ie where ie.studentIndex = :userIndex and ie.startedAt is null and ie.queueId = :queueId")
+//  public void deleteAwaitingIssueByQueueIdAndUser(@Param("queueId") Long queueId, @Param("userIndex") String userIndex);
 
-  public List<IssueEntity> findByQueueIdAndCompletedAt(Long queueId, LocalDateTime completedAt);
+  void deleteByStartedAtIsNullAndQueueIdAndStudentIndexAndCreatedAtIsAfter(Long queueId, String studentIndex, LocalDateTime createdAt);
+
 }

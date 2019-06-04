@@ -5,26 +5,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BasicIssueResponse {
+public class CompletedIssuesInQueueResponse {
 
   private Long queueId;
-  private String queueName;
-  private String queueShortName;
+  private List<CompletedIssue> completedIssues;
 
   @Builder
   @Data
   @NoArgsConstructor
   @AllArgsConstructor
-  public static class ActiveIssue {
+  public static class CompletedIssue {
     private Long id;
     private LocalDateTime createdAt;
+    private LocalDateTime startedAt;
+    private LocalDateTime completedAt;
     private String studentIndex;
   }
 

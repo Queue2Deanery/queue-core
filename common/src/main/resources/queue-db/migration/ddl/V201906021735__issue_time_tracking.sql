@@ -17,7 +17,7 @@ select cron.schedule('0 6 * * *', $$ refresh materialized view issue_processing_
 create or replace view issue_processing_estimation_view as select mv.* from issue_processing_estimation_materialized_view mv;
 
 create or replace view active_issue_view as
-select i.id, i.created_at, i.started_at, i.student_index, i.queue_id, ic.name as issue_category_name, ipev.estimated_time_in_sec
+select i.id, i.created_at, i.started_at, i.student_index, i.queue_id, i.student_comment, ic.name as issue_category_name, ipev.estimated_time_in_sec
 from issue i
     join queue q
         on i.queue_id = q.id
