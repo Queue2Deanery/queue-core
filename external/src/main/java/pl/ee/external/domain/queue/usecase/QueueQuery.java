@@ -19,12 +19,6 @@ public class QueueQuery {
 
   private IssueProcessingEstimationViewRepository processingEstimationViewRepository;
 
-
-  @Autowired
-  public QueueQuery(QueueRepository queueRepository) {
-    this.queueRepository = queueRepository;
-  }
-
   public QueueResponse logic(Long id) {
     if (id == null) {
       throw new BusinessException("podaj id");
