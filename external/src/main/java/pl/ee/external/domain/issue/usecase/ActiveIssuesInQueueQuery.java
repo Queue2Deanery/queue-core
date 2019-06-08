@@ -2,6 +2,8 @@ package pl.ee.external.domain.issue.usecase;
 
 import io.vavr.Function1;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.ee.common.exception.EntityNotFoundException;
 import pl.ee.common.model.ActiveIssueViewEntity;
@@ -13,14 +15,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Service
 public class ActiveIssuesInQueueQuery {
 
   private ActiveIssueViewRepository activeIssueViewRepository;
 
   private QueueRepository queueRepository;
-  private Function1<ActiveIssueViewEntity, ActiveIssuesInQueueResponse.ActiveIssue> mapIssue = (issue) ->
+
+  private final Function1<ActiveIssueViewEntity, ActiveIssuesInQueueResponse.ActiveIssue> mapIssue = (issue) ->
     ActiveIssuesInQueueResponse.ActiveIssue.builder()
       .id(issue.getId())
       .studentIndex(issue.getStudentIndex())

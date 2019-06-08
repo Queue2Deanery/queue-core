@@ -17,7 +17,6 @@ public class UserDeleteIssueResponse {
 
   private Long queueId;
 
-  @Builder.Default
   private List<Map.Entry<ApiError.Language, String>> message = List.of(
     Map.entry(ApiError.Language.en, "Issue awaiting processing was deleted successfully"),
     Map.entry(ApiError.Language.pl, "Zgłoszenie oczekujące na przyjęcie przez dziekanat zostało usunięte")

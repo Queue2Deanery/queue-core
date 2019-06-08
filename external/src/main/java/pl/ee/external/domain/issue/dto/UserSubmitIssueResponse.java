@@ -17,7 +17,6 @@ public class UserSubmitIssueResponse {
 
   private Long issueId;
 
-  @Builder.Default
   private List<Map.Entry<ApiError.Language, String>> message = List.of(
     Map.entry(ApiError.Language.en, "You submitted issue successfully"),
     Map.entry(ApiError.Language.pl, "Zgłosiłeś się do kolejki pomyślnie")
