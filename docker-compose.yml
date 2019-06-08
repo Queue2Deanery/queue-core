@@ -75,6 +75,28 @@ services:
       - spring.datasource.username=postgres
       - spring.datasource.password=postgres
 
+  internal:
+    restart: always
+    build:
+      context: .
+      dockerfile: internal.Dockerfile
+    image: queue-backend-internal:v1.0
+    ports:
+      - 80:8080
+    expose:
+      - 80
+    depends_on:
+      queue-db:
+        condition: service_healthy
+      authentication:
+        condition: service_started
+    environment:
+      - server.port=8080
+      - app.authenticationUri=http://authentication:8080/api/v1.0
+      - spring.datasource.url=jdbc:postgresql://queue-db:5432/queue
+      - spring.datasource.username=postgres
+      - spring.datasource.password=postgres
+
   authentication:
     restart: always
     build:

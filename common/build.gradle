@@ -15,11 +15,6 @@ buildscript {
 	}
 }
 
-jar {
-    baseName = 'common'
-    version = '1.0-SNAPSHOT'
-}
-
 group 'pl.ee.common'
 version '1.0-SNAPSHOT'
 
