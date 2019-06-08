@@ -17,7 +17,6 @@ public class UserPatchIssueResponse {
 
   private Long issueId;
 
-  @Builder.Default
   private List<Map.Entry<ApiError.Language, String>> message = List.of(
     Map.entry(ApiError.Language.en, "You updated issue successfully"),
     Map.entry(ApiError.Language.pl, "Zaktualizowałeś zgłoszenie do kolejki pomyślnie")
