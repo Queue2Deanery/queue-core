@@ -12,10 +12,7 @@ import pl.ee.internal.domain.issue.dto.IssueDetailsResponse;
 import pl.ee.internal.domain.issue.dto.IssueProcessingCompleteResponse;
 import pl.ee.internal.domain.issue.dto.IssueProcessingStartResponse;
 import pl.ee.internal.domain.issue.dto.IssuesResponse;
-import pl.ee.internal.domain.issue.usecase.IssueDetailsQuery;
-import pl.ee.internal.domain.issue.usecase.IssueProcessingCompleteCommand;
-import pl.ee.internal.domain.issue.usecase.IssueProcessingStartCommand;
-import pl.ee.internal.domain.issue.usecase.IssuesQuery;
+import pl.ee.internal.domain.issue.usecase.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -28,9 +25,10 @@ import static pl.ee.common.security.SecurityConstants.TOKEN_HEADER_NAME;
 public class IssueController {
 
   private IssueDetailsQuery issueDetailsQuery;
+  private IssuesQuery issuesQuery;
+  private ActiveIssuesQuery activeIssuesQuery;
   private IssueProcessingStartCommand issueProcessingStartCommand;
   private IssueProcessingCompleteCommand issueProcessingCompleteCommand;
-  private IssuesQuery issuesQuery;
 
 
   @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
@@ -38,6 +36,13 @@ public class IssueController {
   public ResponseEntity<IssuesResponse> getIssues(@PathVariable Long queueId) {
     return ok(issuesQuery.logic(queueId));
   }
+
+  @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+  @GetMapping("/active/{queueId}")
+  public ResponseEntity<IssuesResponse> getActiveIssues(@PathVariable Long queueId) {
+    return ok(activeIssuesQuery.logic(queueId));
+  }
+
 
   @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
   @GetMapping("/details/{issueId}")
