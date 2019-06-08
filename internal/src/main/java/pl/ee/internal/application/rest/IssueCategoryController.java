@@ -13,6 +13,7 @@ import pl.ee.internal.domain.issueCategory.usecase.IssueCategoryRemoveCommand;
 import pl.ee.internal.domain.issueCategory.usecase.IssueCategorySubmitCommand;
 
 import static org.springframework.http.ResponseEntity.ok;
+import static pl.ee.common.security.SecurityConstants.TOKEN_HEADER_NAME;
 
 @AllArgsConstructor
 @RestController
@@ -25,19 +26,19 @@ public class IssueCategoryController {
 
   @GetMapping
   @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
-  public ResponseEntity<IssueCategoriesResponse> getIssueCategories() {
+  public ResponseEntity<IssueCategoriesResponse> getIssueCategories(@RequestHeader(value = TOKEN_HEADER_NAME) String token) {
     return ok(issueCategoriesQuery.logic());
   }
 
   @DeleteMapping("/{issueCategoryId}")
   @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
-  public ResponseEntity<IssueCategoryRemoveResponse> removeIssueCategory(@PathVariable Long issueCategoryId) {
+  public ResponseEntity<IssueCategoryRemoveResponse> removeIssueCategory(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @PathVariable Long issueCategoryId) {
     return ok(issueCategoryRemoveCommand.logic(issueCategoryId));
   }
 
   @PostMapping
   @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
-  public ResponseEntity<IssueCategorySubmitResponse> submitIssueCategory(@RequestBody IssueCategorySubmitRequest request) {
+  public ResponseEntity<IssueCategorySubmitResponse> submitIssueCategory(@RequestHeader(value = TOKEN_HEADER_NAME) String token, @RequestBody IssueCategorySubmitRequest request) {
     return ok(issueCategorySubmitCommand.logic(request));
   }
 }

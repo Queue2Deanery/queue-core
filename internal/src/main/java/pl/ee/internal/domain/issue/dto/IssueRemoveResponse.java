@@ -13,11 +13,11 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class IssueProcessingCompleteResponse {
+public class IssueRemoveResponse {
   private Long issueId;
 
   private List<Map.Entry<ApiError.Language, String>> message = List.of(
-    Map.entry(ApiError.Language.en, "You successfuly completed processing issue"),
-    Map.entry(ApiError.Language.pl, "Zakończyłeś obsługiwanie zgłoszenia pomyślnie")
+    Map.entry(ApiError.Language.en, "You successfuly removed issue"),
+    Map.entry(ApiError.Language.pl, "Usunąłeś zgłoszenie pomyślnie")
   );
 }
