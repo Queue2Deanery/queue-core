@@ -19,7 +19,7 @@ public class RevokedJwtTokenEntity {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   private Long id;
 
-  @Column(nullable = false, name = "student_index")
+  @Column(nullable = false, name = "user_index")
   private String userIndex;
 
   @Builder.Default
